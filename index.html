@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 Tribes Introduction</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars */
+            background-color: #000; /* Black background for better video display */
+            font-family: Arial, sans-serif; /* Set a basic font */
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            object-fit: cover; /* Cover the entire screen */
+            /* Adjusting for responsiveness */
+        }
+        .button {
+            position: absolute;
+            bottom: 20px; /* Position at the bottom for better accessibility */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            padding: 12px 24px; /* Adjust padding for mobile */
+            font-size: 1rem; /* Font size that scales well */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            z-index: 10; /* Ensure button is above video */
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 767px) {
+            video {
+                object-fit: contain; /* Ensure video fits within viewport while maintaining aspect ratio */
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="myVideo" autoplay muted playsinline>
+        <source src="videos/12TribesQ.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <button id="unmuteButton" class="button">Unmute</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('myVideo');
+            const unmuteButton = document.getElementById('unmuteButton');
+            const redirectUrl = 'https://tribe-nft-marketplace.vercel.app/otherPage/propechy'; // Replace with the URL to redirect to
+
+            // Function to unmute the video
+            unmuteButton.addEventListener('click', () => {
+                video.muted = false;
+                unmuteButton.style.display = 'none'; // Hide button after unmuting
+            });
+
+            // Array of video sources
+            const videos = [
+                'videos/12TribesQ.mp4',
+                'videos/12Tribes_.mov' // Replace with the URL to your second video
+            ];
+            
+            let currentVideoIndex = 0;
+
+            // Function to handle video end
+            video.addEventListener('ended', () => {
+                if (currentVideoIndex < videos.length - 1) {
+                    // Play next video
+                    currentVideoIndex++;
+                    video.src = videos[currentVideoIndex];
+                    video.play();
+                } else {
+                    // Redirect to another website after the second video ends
+                    window.location.href = redirectUrl;
+                }
+            });
+
+            // Handle video playback errors
+            video.addEventListener('error', (e) => {
+                console.error('Video playback error:', e);
+            });
+        });
+    </script>
+</body>
+</html>
